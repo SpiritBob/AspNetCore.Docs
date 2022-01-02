@@ -453,7 +453,66 @@ To make automatic and custom responses consistent, call the <xref:Microsoft.AspN
 
 ### Log automatic 400 responses
 
-See [How to log automatic 400 responses on model validation errors (dotnet/AspNetCore.Docs#12157)](https://github.com/dotnet/AspNetCore.Docs/issues/12157).
+You can add logging by utilizing [InvalidModelStateResponseFactory](https://docs.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.apibehavioroptions.invalidmodelstateresponsefactory). By default, [InvalidModelStateResponseFactory](https://docs.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.apibehavioroptions.invalidmodelstateresponsefactory) uses [ProblemDetailsFactory](https://docs.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.infrastructure.problemdetailsfactory) to construct an instance of [ValidationProblemDetails](https://docs.microsoft.com/dotnet/api/microsoft.aspnetcore.mvc.validationproblemdetails). Here is an example of code to be used in `Startup.ConfigureServices` that adds logging and preserves the original behavior:
+
+```csharp
+services.AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        // If preserving of the original behavior is desired, get a reference to the delegate.
+		var builtInFactory = options.InvalidModelStateResponseFactory;
+		
+        options.InvalidModelStateResponseFactory = context =>
+		{
+			// As an example, we will create a logger with the full name of the action method as the category.
+			var logger = GetLoggerInstance(context.HttpContext.RequestServices, context.ActionDescriptor.DisplayName);
+			
+			// Log accordingly.
+			
+			// By using the original delegate, we preserve the default behavior.
+            // Alternatively, you can take full control and simply construct the ValidationProblemDetails object yourself, or even use a custom object.
+            
+            // Example of manually constructing a ValidationProblemDetails object:
+            // var problemDetails = new ValidationProblemDetails(context.ModelState)
+            //    {
+            //        Type = "https://tools.ietf.org/html/rfc7231#section-6.5.1",
+            //        Title = "One or more model validation errors occurred.",
+            //        Status = StatusCodes.Status400BadRequest,
+            //        Detail = "See the errors property for details.",
+            //        Instance = context.HttpContext.Request.Path,
+            //        Extensions =
+            //        {
+            //            ["traceId"] = Activity.Current?.Id ?? context.HttpContext?.TraceIdentifier
+            //        }
+            //    };
+            //
+            
+			var result = builtInFactory(context);
+            
+            // If access is required on the returned ValidationProblemDetails object, get a reference to it.
+            var problemDetails = (ValidationProblemDetails)((ObjectResult)result).Value;
+            
+            // Modify & Log accordingly.
+            
+            return result;
+			
+			static ILogger GetLoggerInstance(IServiceProvider provider, string? category)
+			{
+				if (category is null)
+				{
+					// Get an instance of ILogger with the category "Startup" and log accordingly.
+					return provider.GetRequiredService<ILogger<Startup>>();
+				}
+				else
+				{
+					// Alternatively, get an instance of ILoggerFactory and create a logger with the custom category.
+					var loggerFactory = provider.GetRequiredService<ILoggerFactory>();
+					return loggerFactory.CreateLogger(category);
+				}
+			}
+		};
+    });
+```
 
 ### Disable automatic 400 response
 
