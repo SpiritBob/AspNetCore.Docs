@@ -64,7 +64,7 @@ The [asp-route-{value}](xref:Microsoft.AspNetCore.Mvc.TagHelpers.AnchorTagHelper
 
 Consider the following controller action:
 
-[!code-csharp[](samples/TagHelpersBuiltIn/Controllers/BuiltInTagController.cs?name=snippet_AnchorTagHelperAction)]
+[!code-csharp[](samples/TagHelpersBuiltIn/Controllers/SpeakerController.cs?name=snippet_SpeakerDetailAction)]
 
 With a default route template defined in *Startup.Configure*:
 
@@ -114,7 +114,7 @@ If either `asp-controller` or `asp-action` aren't specified, then the same defau
 
 ### asp-route
 
-The [asp-route](xref:Microsoft.AspNetCore.Mvc.TagHelpers.AnchorTagHelper.Route*) attribute is used for creating a URL linking directly to a named route. Using [routing attributes](xref:mvc/controllers/routing#attribute-routing), a route can be named as shown in the `SpeakerController` and used in its `Evaluations` action:
+The [asp-route](xref:Microsoft.AspNetCore.Mvc.TagHelpers.AnchorTagHelper.Route*) attribute is used for creating a URL linking directly to a named route. Using [routing attributes](xref:mvc/controllers/routing#ar), a route can be named as shown in the `SpeakerController` and used in its `Evaluations` action:
 
 [!code-csharp[](samples/TagHelpersBuiltIn/Controllers/SpeakerController.cs?range=22-24)]
 
@@ -283,6 +283,8 @@ The generated HTML:
 ```html
 <a href="/Attendee?attendeeid=10">View Attendee</a>
 ```
+
+If the referenced page doesn't exist, a link to the main page is generated. No warning is indicated.
 
 ### asp-page-handler
 

@@ -38,7 +38,7 @@ The build process restores npm dependencies on the first run, which can take sev
 
 # [.NET Core CLI](#tab/netcore-cli)
 
-Ensure you have an environment variable called `ASPNETCORE_Environment` with value of `Development`. On Windows (in non-PowerShell prompts), run `SET ASPNETCORE_Environment=Development`. On Linux or macOS, run `export ASPNETCORE_Environment=Development`.
+Ensure you have an environment variable called `ASPNETCORE_ENVIRONMENT` with value of `Development`. On Windows (in non-PowerShell prompts), run `SET ASPNETCORE_ENVIRONMENT=Development`. On Linux or macOS, run `export ASPNETCORE_ENVIRONMENT=Development`.
 
 Run [dotnet build](/dotnet/core/tools/dotnet-build) to verify your app builds correctly. On the first run, the build process restores npm dependencies, which can take several minutes. Subsequent builds are much faster.
 
@@ -102,6 +102,8 @@ When you start your ASP.NET Core app, it won't launch a CRA server. The instance
 
 > [!IMPORTANT]
 > "Server-side rendering" is not a supported feature of this template. Our goal with this template is to meet parity with "create-react-app". As such, scenarios and features not included in a "create-react-app" project (such as SSR) are not supported and are left as an exercise for the user.
+
+[!INCLUDE[](~/includes/spa-proxy.md)]
 
 ## Additional resources
 

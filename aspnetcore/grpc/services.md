@@ -73,10 +73,12 @@ public class GreeterService : GreeterBase
 {
     public override Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
     {
-        return Task.FromResult(new HelloRequest { Message = $"Hello {request.Name}" });
+        return Task.FromResult(new HelloReply { Message = $"Hello {request.Name}" });
     }
 }
 ```
+
+The `ServerCallContext` gives the context for a server-side call.
 
 The service implementation is registered with the app. If the service is hosted by ASP.NET Core gRPC, it should be added to the routing pipeline with the `MapGrpcService` method.
 
@@ -137,8 +139,8 @@ Unary calls are the most similar to [actions on web API controllers](xref:web-ap
 
 ```protobuf
 message ExampleRequest {
-    int pageIndex = 1;
-    int pageSize = 2;
+    int32 pageIndex = 1;
+    int32 pageSize = 2;
     bool isDescending = 3;
 }
 ```
@@ -209,7 +211,7 @@ public override async Task<ExampleResponse> StreamingFromClient(
 
 ### Bi-directional streaming method
 
-A bi-directional streaming method starts *without* the method receiving a message. The `requestStream` parameter is used to read messages from the client. The method can choose to send messages with `responseStream.WriteAsync`. A bi-directional streaming call is complete when the the method returns:
+A bi-directional streaming method starts *without* the method receiving a message. The `requestStream` parameter is used to read messages from the client. The method can choose to send messages with `responseStream.WriteAsync`. A bi-directional streaming call is complete when the method returns:
 
 ```csharp
 public override async Task StreamingBothWays(IAsyncStreamReader<ExampleRequest> requestStream,

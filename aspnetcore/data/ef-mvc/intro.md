@@ -1,6 +1,6 @@
 ---
 title: "Tutorial: Get started with EF Core in an ASP.NET MVC web app"
-description: This page is the first in a series of tutorials that explain how to build the Contoso University sample EF/MVC app"
+description: "This page is the first in a series of tutorials that explain how to build the Contoso University sample EF/MVC app"
 author: rick-anderson
 ms.author: riande
 ms.custom: mvc
@@ -16,6 +16,8 @@ By [Tom Dykstra](https://github.com/tdykstra) and [Rick Anderson](https://twitte
 ::: moniker range=">= aspnetcore-5.0"
 
 [!INCLUDE [RP better than MVC](~/includes/RP-EF/rp-over-mvc.md)]
+
+This tutorial has not been updated for ASP.NET Core 6. The ASP.NET Core 6 web templates use the new [minimal hosting model](xref:migration/50-to-60#new-hosting-model), which unifies `Startup.cs` and `Program.cs` into a single `Program.cs` file. Until this tutorial is updated, see <xref:data/ef-rp/intro> and <xref:tutorials/first-mvc-app/adding-model> on how to use EF with the new minimal hosting model. Updating the tutorial for ASP.NET Core 6 is tracked in [this GitHub issue](https://github.com/dotnet/AspNetCore.Docs/issues/13920).
 
 The Contoso University sample web app demonstrates how to create an ASP.NET Core MVC web app using Entity Framework (EF) Core and Visual Studio.
 
@@ -236,7 +238,7 @@ The preceding code checks if the database exists:
 
 * If the database is not found;
   * It is created and loaded with test data. It loads test data into arrays rather than `List<T>` collections to optimize performance.
-* If the database if found, it takes no action.
+* If the database is found, it takes no action.
 
 Update *Program.cs* with the following code:
 
@@ -331,7 +333,7 @@ For example, if an `EmailAddress` property is added to the `Student` class, a ne
 
 ## Conventions
 
-The amount of code written in order for the EF to to create a complete database is minimal because of the use of the conventions EF uses:
+The amount of code written in order for the EF to create a complete database is minimal because of the use of the conventions EF uses:
 
 * The names of `DbSet` properties are used as table names. For entities not referenced by a `DbSet` property, entity class names are used as table names.
 * Entity property names are used for column names.
@@ -367,7 +369,7 @@ For more information about asynchronous programming in .NET, see [Async Overview
 
 ## Limit entities fetched
 
-See [Performance considerations](xref:data/ef-rp/intro#performance-considerations) for information on limiting the number or entities returned from a query.
+See [Performance considerations](xref:data/ef-rp/intro#performance-considerations) for information on limiting the number of entities returned from a query.
 
 [!INCLUDE[s](~/includes/sql-log.md)]
 

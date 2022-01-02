@@ -20,12 +20,15 @@ Tag Helpers enable server-side code to participate in creating and rendering HTM
 ## What Tag Helpers provide
 
 **An HTML-friendly development experience**
+
    For the most part, Razor markup using Tag Helpers looks like standard HTML. Front-end designers conversant with HTML/CSS/JavaScript can edit Razor without learning C# Razor syntax.
 
 **A rich IntelliSense environment for creating HTML and Razor markup**
+
    This is in sharp contrast to HTML Helpers, the previous approach to server-side creation of markup in Razor views. [Tag Helpers compared to HTML Helpers](#tag-helpers-compared-to-html-helpers) explains the differences in more detail. [IntelliSense support for Tag Helpers](#intellisense-support-for-tag-helpers) explains the IntelliSense environment. Even developers experienced with Razor C# syntax are more productive using Tag Helpers than writing C# Razor markup.
 
 **A way to make you more productive and able to produce more robust, reliable, and maintainable code using information only available on the server**
+
    For example, historically the mantra on updating images was to change the name of the image when you change the image. Images should be aggressively cached for performance reasons, and unless you change the name of an image, you risk clients getting a stale copy. Historically, after an image was edited, the name had to be changed and each reference to the image in the web app needed to be updated. Not only is this very labor intensive, it's also error prone (you could miss a reference, accidentally enter the wrong string, etc.) The built-in `ImageTagHelper` can do this for you automatically. The `ImageTagHelper` can append a version number to the image name, so whenever the image changes, the server automatically generates a new unique version for the image. Clients are guaranteed to get the current image. This robustness and labor savings comes essentially free by using the `ImageTagHelper`.
 
 Most built-in Tag Helpers target standard HTML elements and provide server-side attributes for the element. For example, the `<input>` element used in many views in the *Views/Account* folder contains the `asp-for` attribute. This attribute extracts the name of the specified model property into the rendered HTML. Consider a Razor view with the following model:
@@ -156,9 +159,9 @@ Consider writing an HTML `<label>` element. As soon as you enter `<l` in the Vis
 
 ![After typing "l" on the keyboard, IntelliSense suggests a list of possible tag names with "label" selected.](intro/_static/label.png)
 
-Not only do you get HTML help, but the icon (the "@" symbol with "<>" under it).
+Not only do you get HTML help, but also the icon (the "@" symbol with "<>" under it).
 
-![The the "@" symbol with "<>" under it.](intro/_static/tagSym.png)
+![The "@" symbol with "<>" under it.](intro/_static/tagSym.png)
 
 The icon identifies the element as targeted by Tag Helpers. Pure HTML elements (such as the `fieldset`) display the "<>" icon.
 
@@ -178,7 +181,7 @@ As soon as a Tag Helper attribute is entered, the tag and attribute fonts change
 
 ![The user selected "asp-for", which is now in bold purple because the user isn't using the Dark theme.](intro/_static/labelaspfor2.png)
 
-You can enter the Visual Studio *CompleteWord* shortcut (Ctrl +spacebar is the [default](/visualstudio/ide/default-keyboard-shortcuts-in-visual-studio) inside the double quotes (""), and you are now in C#, just like you would be in a C# class. IntelliSense displays all the methods and properties on the page model. The methods and properties are available because the property type is `ModelExpression`. In the image below, I'm editing the `Register` view, so the `RegisterViewModel` is available.
+You can enter the Visual Studio *CompleteWord* shortcut (Ctrl +spacebar is the [default](/visualstudio/ide/default-keyboard-shortcuts-in-visual-studio)) inside the double quotes (""), and you are now in C#, just like you would be in a C# class. IntelliSense displays all the methods and properties on the page model. The methods and properties are available because the property type is `ModelExpression`. In the image below, I'm editing the `Register` view, so the `RegisterViewModel` is available.
 
 ![The user types "e" in the value for the "asp-for" attribute. IntelliSense suggests possible completion with "Email" selected.](intro/_static/intellemail.png)
 
@@ -250,7 +253,7 @@ The Visual Studio editor helps you write **all** of the markup in the Tag Helper
 
 * Web Server controls include automatic browser detection. Tag Helpers have no knowledge of the browser.
 
-* Multiple Tag Helpers can act on the same element (see [Avoiding Tag Helper conflicts](xref:mvc/views/tag-helpers/authoring#avoid-tag-helper-conflicts) ) while you typically can't compose Web Server controls.
+* Multiple Tag Helpers can act on the same element (see [Avoiding Tag Helper conflicts](xref:mvc/views/tag-helpers/authoring#avoid-tag-helper-conflicts)) while you typically can't compose Web Server controls.
 
 * Tag Helpers can modify the tag and content of HTML elements that they're scoped to, but don't directly modify anything else on a page. Web Server controls have a less specific scope and can perform actions that affect other parts of your page; enabling unintended side effects.
 

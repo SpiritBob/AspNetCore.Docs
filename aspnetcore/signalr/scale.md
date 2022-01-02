@@ -25,7 +25,7 @@ SignalR requires that all HTTP requests for a specific connection be handled by 
 
 In all other circumstances (including when the Redis backplane is used), the server environment must be configured for sticky sessions.
 
-For guidance on configuring Azure App Service for SignalR, see <xref:signalr/publish-to-azure-web-app>.
+For guidance on configuring Azure App Service for SignalR, see <xref:signalr/publish-to-azure-web-app>. For guidance on configuring sticky sessions for Blazor apps that use the [Azure SignalR Service](#azure-signalr-service), see <xref:blazor/host-and-deploy/server#signalr-configuration>.
 
 ## TCP connection resources
 
@@ -126,6 +126,8 @@ http {
       proxy_set_header Upgrade $http_upgrade;
       proxy_set_header Connection $connection_upgrade;
       proxy_cache off;
+      # WebSockets were implemented after http/1.0
+      proxy_http_version 1.1;
 
       # Configuration for ServerSentEvents
       proxy_buffering off;
@@ -151,9 +153,9 @@ With [Nginx Open Source](https://nginx.org/en/), use `ip_hash` to route connecti
 http {
   upstream backend {
     # App server 1
-    server http://localhost:5000;
+    server localhost:5000;
     # App server 2
-    server http://localhost:5002;
+    server localhost:5002;
 
     ip_hash;
   }
@@ -166,9 +168,9 @@ With [Nginx Plus](https://www.nginx.com/products/nginx), use `sticky` to add a c
 http {
   upstream backend {
     # App server 1
-    server http://localhost:5000;
+    server localhost:5000;
     # App server 2
-    server http://localhost:5002;
+    server localhost:5002;
 
     sticky cookie srv_id expires=max domain=.example.com path=/ httponly;
   }
@@ -189,6 +191,7 @@ For more information about ASP.NET Core with Nginx see the following article:
 * [NCache](https://www.alachisoft.com/ncache/asp-net-core-signalr.html)
 * [Orleans](https://github.com/OrleansContrib/SignalR.Orleans)
 * [Rebus](https://github.com/rebus-org/Rebus.SignalR)
+* [SQL Server](https://github.com/IntelliTect/IntelliTect.AspNetCore.SignalR.SqlServer)
 
 ## Next steps
 

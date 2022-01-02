@@ -11,7 +11,7 @@ uid: signalr/troubleshoot
 ---
 # Troubleshoot connection errors
 
-This section provides help with errors that can occur when trying to establish a connection to a ASP.NET Core SignalR hub.
+This section provides help with errors that can occur when trying to establish a connection to an ASP.NET Core SignalR hub.
 
 ### Response code 404
 
@@ -37,7 +37,7 @@ WebSocket connection to 'wss://xxx/HubName' failed: Error during WebSocket hands
 Error: Failed to start the connection: Error: There was an error with the transport.
 ```
 
-This error is usually caused by a client using only the WebSockets transport but the WebSockets protocol is not enabled on the server.
+This error is usually caused by a client using only the WebSockets transport but the WebSocket protocol isn't enabled on the server.
 
 ### Response code 307
 
